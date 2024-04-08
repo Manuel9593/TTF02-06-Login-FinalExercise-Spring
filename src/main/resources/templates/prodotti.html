@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+	<head>
+		<title>Prodotti su admin</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="d-flex flex-column justify-content-center align-content-center m-4">
+			<div class="container-sm bg-body-secondary pb-3 pt-3 pe-5 ps-5 table-responsive">
+				<div class="h1">PRODOTTI</div>
+				<table class="table table-hover table-md table-light align-middle text-center mt-3">
+					<thead>
+						<tr>
+							<th scope="col">Nome</th>
+							<th scope="col">Prezzo</th>
+							<th scope="col"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="product: ${products}">
+							<td th:text="${product.name}"></td>
+							<td th:text="${product.price}"></td>
+							<td>
+								<a class="btn btn-danger" th:href="@{remove-product{id=${product.id})}" role="button">Elimina</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<hr />
+				<form action="add-product" method="post" class="mt-4 pt-2 pb-2 ps-3 pe-3 bg-body-tertiary">
+					<div class="mb-3 row align-middle">
+						<label for="product" class="col-sm-auto col-form-label">Nome</label>
+						<div class="col-sm-auto align-middle">
+							<input type="text" name="name" class="form-control"/>
+						</div>
+					</div>
+					<div class="mb-3 row align-middle">
+						<label for="product" class="col-sm-auto col-form-label">Prezzo</label>
+						<div class="col-sm-3 align-middle input-group">
+							<input type="number" name="price" placeholder="Prezzo" aria-label="Prezzo" aria-describedby="price-euro" class="form-control"/>
+							<span id="price-euro" class="input-group-text">€</span>
+						</div>
+					</div>
+					<div class="mb-3 align-middle">
+						<input class="btn btn-primary" type="submit" name="add" />
+					</div>
+				</form>
+				<div>
+					<a href='home.jsp'>HOME</a>
+				</div>
+				<div>
+					<a href='logout'>logout</a>
+				</div>
+			</div>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

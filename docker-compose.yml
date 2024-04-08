@@ -1,0 +1,53 @@
+version: "3.9"
+name: "parra-ecommerce-application"
+
+services:
+  ecommerce-database:
+    image: "mysql:8.3"
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: ecommerce-data-store
+    restart: always
+    environment:
+      MYSQL_DATABASE: ecommerce
+      MYSQL_USER: ecommerce
+      MYSQL_PASSWORD: password123
+      MYSQL_ROOT_PASSWORD: example
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+    networks:
+      app-network:
+        ipv4_address: 172.28.0.30
+        aliases:
+          - "ecommerce-data"
+  ecommerce-app:
+    image: eclipse-temurin:17-jdk-alpine
+    container_name: ecommerce-application
+    restart: always
+    volumes:
+      - ./target/login-ecommerce-with-spring-0.0.1.jar:/app.jar
+      - app-tmp:/tmp
+    entrypoint: ['java', '-jar', 'app.jar']
+    ports:
+      - 80:80
+    networks:
+      app-network:
+        ipv4_address: 172.28.0.10
+        aliases:
+          - "ecommerce-app"
+    depends_on:
+      - ecommerce-database
+volumes:
+  db-data:
+  app-tmp:
+networks:
+  app-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
+          ip_range: 172.28.5.0/24
+          gateway: 172.28.5.254
