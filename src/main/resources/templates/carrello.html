@@ -1,16 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
 	<head>
+		<title>Carrello</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
-		<title>Carrello</title>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 	</head>
 	<body>
 		<div
 			class="d-flex flex-column justify-content-center align-content-center m-4">
 			<div class="container-sm bg-body-secondary pb-3 pt-3 pe-5 ps-5">
-				<div class="h1" th:text="|CARRELLO PER ${ user.getFullName() }|"></div>
+				<div class="d-flex flex-row justify-content-between">
+					<div class="fs-5 mb-2">
+						<a th:href="@{/home}"
+							class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+							<i class="bi bi-arrow-left-circle"></i> Home
+						</a>
+					</div>
+					<div class="fs-5 mb-2">
+						<a th:href="@{/home}"
+							class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+							Ricarica <i class="bi bi-wallet"></i>
+						</a>
+					</div>
+				</div>
+				<div class="d-flex flex-row justify-content-between h2 fs-2 mb-3">
+					<div class="h1" th:text="|CARRELLO PER ${user.fullName}|"></div>
+					<div th:text="|Credit: € ${ user.credit }|">
+					</div>
+					
+				</div>
+				<div th:if="${err}" class="alert alert-warning alert-dismissible fade show" role="alert">
+					<strong>Credito non sufficiente!</strong> Dovresti ricaricare il tuo portafoglio.
+				</div>
 				<table class="table table-primary table-striped align-middle">
 					<thead>
 						<tr>
@@ -24,12 +47,12 @@
 					<tbody>
 						<tr th:each="product : ${cart.getProducts()}">
 							<td th:text="${product.name}"></td>
-							<td th:text="${product.price}"></td>
+							<td th:text="|€ ${product.price}|"></td>
 							<td th:text="${cart.getQuantity(product)}"></td>
-							<td th:text="${cart.getQuantity(product)*product.price}"></td>
+							<td th:text="|€ ${cart.getQuantity(product)*product.price}|"></td>
 							<td>
 								<a
-									th:href="@{/carrello/remove-product (productId=${product.id})"
+									th:href="@{/carrello/remove-product (product=${product.id})}"
 									class="btn btn-danger"
 									role="button"
 								>
@@ -38,11 +61,59 @@
 							</td>
 						</tr>
 					</tbody>
+					<tfoot>
+						<tr>
+							<td class="fw-bold text-uppercase" colspan="3" th:text="|totale|"></td>
+							<td th:text="|€ ${cart.total}|"></td>
+							<td></td>
+						</tr>
+					</tfoot>
 				</table>
-				<a th:href="@{/aggiungi}">ADD</a>
-				<div>
-					<a href='logout'>logout</a>
+				
+				<div class="mb-3 row align-middle">
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#purchaseConfirmModal">Acquista</button>
 				</div>
+				<div class="modal fade" id="purchaseConfirmModal" tabindex="-1" aria-labelledby="purchaseConfirmModal" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h1 class="modal-title fs-5" id="exampleModalLabel">Send your order</h1>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								Vuoi confermare il tuo ordine?
+							</div>
+							<div class="modal-footer">
+								<form class="mt-4 pt-2 pb-2 ps-3 pe-3" th:action="@{/carrello/purchase}" method="GET">
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+									<button type="submit" class="btn btn-primary">Manda l'ordine</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<form class="mt-4 pt-2 pb-2 ps-3 pe-3 bg-body-tertiary"
+					th:action="@{/carrello/add-product}" method="POST">
+					<div class="mb-3 row align-middle">
+						<label for="product" class="col-sm-auto col-form-label">Prodotto</label>
+						<div class="col-sm-auto align-middle">
+							<select id="product" name="product" class="form-select" aria-label="Default select example" required>
+								<th:block th:each="product : ${ products }">
+									<option th:value="${ product.id }" th:text="${ product.name }"/>
+								</th:block>
+							</select>
+						</div>
+					</div>
+					<div class="mb-3 row align-middle">
+						<label for="quantity" class="col-sm-auto col-form-label">Quantità</label>
+						<div class="col-sm-auto align-middle">
+							<input id="quantity" type="number" value="1" name="quantity" class="form-control" required/>
+						</div>
+					</div>
+					<div class="mb-3">
+						<button type="submit" class="btn btn-primary">Aggiungi</button>
+					</div>
+				</form>
 			</div>
 		</div>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

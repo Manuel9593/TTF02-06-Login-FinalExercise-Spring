@@ -23,7 +23,7 @@
 							<td th:text="${product.name}"></td>
 							<td th:text="${product.price}"></td>
 							<td>
-								<a class="btn btn-danger" th:href="@{remove-product{id=${product.id})}" role="button">Elimina</a>
+								<a class="btn btn-danger" th:href="@{remove-product(id=${product.id})}" role="button">Elimina</a>
 							</td>
 						</tr>
 					</tbody>
@@ -48,10 +48,10 @@
 					</div>
 				</form>
 				<div>
-					<a href='home.jsp'>HOME</a>
+					<a th:href='@{home}'>HOME</a>
 				</div>
 				<div>
-					<a href='logout'>logout</a>
+					<a th:href='@{logout}'>logout</a>
 				</div>
 			</div>
 		</div>

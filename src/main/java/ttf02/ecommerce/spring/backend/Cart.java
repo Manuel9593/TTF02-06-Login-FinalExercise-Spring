@@ -30,6 +30,10 @@ public class Cart {
 		cartList.remove(p);
 	}
 	
+	public void clearCart() {
+		cartList.clear();
+	}
+	
 	public int getTotal() {
 		int total = 0;
 		for (Product p: getProducts())

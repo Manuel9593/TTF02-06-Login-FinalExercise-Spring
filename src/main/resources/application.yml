@@ -1,6 +1,16 @@
 server:
   port: 80
+  error:
+    whitelabel:
+      enabled: false
+    include-exception: true
+    include-message: ALWAYS
+    include-stacktrace: ALWAYS
 spring:
+  docker:
+    compose:
+      file: "docker-compose.yml"
+      lifecycle-management: start-and-stop
   application:
     name: login-ecommerce-with-spring
   datasource:

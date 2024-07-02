@@ -30,4 +30,17 @@ public class UserService {
 		user.setSurname(surname);
 		repo.save(user);
 	}
+	
+	public void updatePassword(String login, String password) {
+		User user = repo.findById(login).get();
+		user.setPassword(password);
+		repo.save(user);
+	}
+	
+	public void accreditatePurchase(String login, int totalPurchase) {
+		User user = repo.findById(login).get();
+		int finalUserCredit = user.getCredit() - totalPurchase;
+		user.setCredit(finalUserCredit);
+		repo.save(user);
+	}
 }

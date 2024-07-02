@@ -22,6 +22,7 @@ public class User {
 	private String name, surname;
 	@Column(nullable=false, columnDefinition="BIT(1)")
 	private boolean admin;
+	private int credit = 0;
 	
 	public String getFullName() {
 		return getName() + " " + getSurname();

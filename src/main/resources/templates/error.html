@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+		<title>Ooops!</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+	</head>
+	<body style="min-height: 100vh">
+		<div class="container p-5 d-flex flex-column text-center h-100 align-content-center gap-5">
+			<div class="row">
+				<span class="col h1" style="font-size: 80px" th:text="${status}"></span>
+			</div>
+			<div class="row">
+				<span class="col h3" th:text="${message}"></span>
+			</div>
+			<div class="row accordion" id="errorAccordion">
+				<div class="accordion-item">
+					<h2 class="accordion-header">
+						<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#pathElement" aria-expanded="true" aria-controls="pathElement">
+							Path
+						</button>
+					</h2>
+					<div id="pathElement" class="accordion-collapse collapse show" data-bs-parent="#errorAccordion">
+						<div class="accordion-body text-wrap">
+							<div th:text="${path}"></div>
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item">
+					<h2 class="accordion-header">
+						<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#traceElement" aria-expanded="true" aria-controls="traceElement">
+							Stack Trace
+						</button>
+					</h2>
+					<div id="traceElement" class="accordion-collapse collapse show" data-bs-parent="#errorAccordion">
+						<div class="accordion-body text-wrap text-start bg-thirtiary">
+							<code th:text="${trace}" style="text-indent: 10ch; padding-left: 10ch"></code>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<a th:href=@{/} class="col btn btn-primary btn-md" role="button">Torna alla Homepage</a>
+			</div>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

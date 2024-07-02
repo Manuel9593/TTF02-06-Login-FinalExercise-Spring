@@ -7,5 +7,4 @@ import ttf02.ecommerce.spring.backend.entities.Product;
 
 @Component
 public interface ProductRepository extends JpaRepository<Product, Integer> {
-	
 }

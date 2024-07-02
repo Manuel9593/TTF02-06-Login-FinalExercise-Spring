@@ -30,7 +30,7 @@
 						<label for="login" class="col-sm-auto col-form-label">Username</label>
 						<div class="col-sm-auto">
 							<input type="text" id="login" class="form-control form-control-md"
-								th:value='${user.getLogin()}' disabled readonly>
+								th:value='${user.login}' disabled readonly>
 						</div>
 					</div>
 					<div class="mb-3 row">
@@ -65,12 +65,12 @@
 				<form class="mt-4 pt-2 pb-2 ps-3 pe-3 bg-body-tertiary"
 					action="./update-password" method="post">
 					<div class="mb-3 row">
-						<label for="old" class="col-sm-auto col-form-label">Vecchia
+						<label for="oldPassword" class="col-sm-auto col-form-label">Vecchia
 							password</label>
 						<div class="col-sm-auto">
 							<input type="password"
-								id="old"
-								name="old"
+								id="oldPassword"
+								name="oldPassword"
 								class="form-control form-control-md"
 								th:classappend="${passwordError != null ? 'is-invalid' : ''}"
 								required
@@ -79,12 +79,12 @@
 						</div>
 					</div>
 					<div class="mb-3 row">
-						<label for="newAuth" class="col-sm-auto col-form-label">Nuova
+						<label for="newPassword" class="col-sm-auto col-form-label">Nuova
 							Password</label>
 						<div class="col-sm-auto">
 							<input type="password"
-								id="newAuth"
-								name="newAuth"
+								id="newPassword"
+								name="newPassword"
 								class="form-control form-control-md"
 								th:classappend="${passwordError != null ? 'is-invalid' : ''}"
 								required
@@ -94,12 +94,12 @@
 						</div>
 					</div>
 					<div class="mb-3 row">
-						<label for="reconfAuth" class="col-sm-auto col-form-label">Riconferma
+						<label for="confirmPassword" class="col-sm-auto col-form-label">Riconferma
 							password</label>
 						<div class="col-sm-auto">
 							<input type="password"
-								id="reconfAuth"
-								name="reconfAuth"
+								id="confirmPassword"
+								name="confirmPassword"
 								class="form-control form-control-md"
 								th:classappend="${passwordError != null ? (passwordError == 'reconf' ? 'is-invalid': '') : ''}"
 								required>
